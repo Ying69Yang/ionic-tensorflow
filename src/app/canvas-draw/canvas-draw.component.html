@@ -1,0 +1,39 @@
+<ion-toolbar id="top-toolbar" color="light">
+  <ion-buttons slot="start">
+    <ion-button *ngFor="let colour of availableColours" (click)="changeColour(colour)">
+      <ion-icon slot="icon-only" [style.color]="colour" name="brush"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button style="border: 1px solid #cecece;" style.color="#fff" (click)="changeColour('#fff')">
+      <ion-icon slot="icon-only" style="color: #fff;" name="square"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<canvas #myCanvas drawable></canvas>
+
+<ion-toolbar id="bottom-toolbar" color="light">
+  <ion-buttons slot="start">
+    <ion-button color="dark" (click)="clearCanvas()">
+      <ion-icon slot="icon-only" name="trash"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button color="dark" (click)="changeSize(5)">
+      <ion-icon slot="icon-only" style="font-size: 0.25em;" name="radio-button-on"></ion-icon>
+    </ion-button>
+    <ion-button color="dark" (click)="changeSize(10)">
+      <ion-icon slot="icon-only" style="font-size: 0.5em;" name="radio-button-on"></ion-icon>
+    </ion-button>
+    <ion-button color="dark" (click)="changeSize(20)">
+      <ion-icon slot="icon-only" style="font-size: 1em;" name="radio-button-on"></ion-icon>
+    </ion-button>
+    <ion-button color="dark" (click)="changeSize(50)">
+      <ion-icon slot="icon-only" style="font-size: 2em;" name="radio-button-on"></ion-icon>
+    </ion-button>
+    <ion-button color="dark" (click)="changeSize(200)">
+      <ion-icon slot="icon-only" style="font-size: 3em;" name="radio-button-on"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
