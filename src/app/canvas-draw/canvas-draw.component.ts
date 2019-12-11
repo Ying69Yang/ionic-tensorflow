@@ -68,31 +68,23 @@ export class CanvasDrawComponent implements OnInit, AfterViewInit {
 
       // Convert the canvas pixels to a Tensor of the matching shape
       let img = tf.browser.fromPixels(imageData, 1)
-      .resizeNearestNeighbor([28, 28]) // Shape: (28, 28, 3) - RGB image
-      .mean(2) // Shape: (28, 28) - grayscale
-      .expandDims(2) // Shape: (28, 28, 1) - network expects 3d values with channels in the last dimension
-      .expandDims() // Shape: (1, 28, 28, 1) - network makes predictions for "batches" of images
-      .toFloat() // Network works with floating points inputs
-      .div(255.0); // Normalize [0..255] values into [0..1] range
+        .resizeNearestNeighbor([28, 28]) // Shape: (28, 28, 3) - RGB image
+        .mean(2) // Shape: (28, 28) - grayscale
+        .expandDims(2) // Shape: (28, 28, 1) - network expects 3d values with channels in the last dimension
+        .expandDims() // Shape: (1, 28, 28, 1) - network makes predictions for "batches" of images
+        .toFloat() // Network works with floating points inputs
+        .div(255.0); // Normalize [0..255] values into [0..1] range
       console.log(img.shape);
 
       // Make and format the predications
       const output = this.model.predict(img) as any;
 
-      console.log(output.data());
-      // Save predictions on the component
-      this.predictions = Array.from(output.data());
-      this.predictedNumber = this.predictions.indexOf(Math.max(...this.predictions));
-      console.log(this.predictedNumber);
-
-/*       for (let i = 0; i < this.predictions.length; i++) {
-        if (this.predictions[i] === '1') {
-          this.predictedNumber = i.toString();
-        }
-      }
-      if (this.predictedNumber === '') {
-        this.predictedNumber = ':(';
-      } */
+      output.data().then((predictions) => {
+        console.log(predictions);
+        // Save predictions on the component
+        this.predictedNumber = predictions.indexOf(Math.max(...predictions));
+        console.log(this.predictedNumber);
+      });
     });
 
   }
@@ -116,9 +108,9 @@ export class CanvasDrawComponent implements OnInit, AfterViewInit {
 
     this.context.beginPath(); // begin
 
-    this.context.lineWidth = 10;
+    this.context.lineWidth = this.brushSize;
     this.context.lineCap = 'round';
-    this.context.strokeStyle = '#111111';
+    this.context.strokeStyle = this.currentColour;
 
     this.context.moveTo(this.pos.x, this.pos.y);
     this.setPosition(e);
