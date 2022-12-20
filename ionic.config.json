@@ -1,5 +1,7 @@
 {
   "name": "ionic-tensorflow",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
